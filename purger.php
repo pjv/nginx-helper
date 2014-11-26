@@ -132,6 +132,16 @@ namespace rtCamp\WP\Nginx {
 				}
 
 				$this->purgeUrl( get_permalink( $_post_ID ) );
+
+				// pjv -- also purge some comment pages if necessary
+				if ( get_option( 'page_comments' ) ) {
+					$baseuri = get_permalink( $_post_ID );
+					for ($i=1; $i < 6; $i++) {
+						$this->purgeUrl( trailingslashit( $baseuri ) . "comment-page-{$i}/" );
+					}
+				}
+				// END purge comment pages
+
 			}
 
 			if ( $_purge_archive ) {
